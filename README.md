@@ -1,4 +1,4 @@
-Ths util assist in migrating a confluence wiki to a gollum wiki.
+This util assist in migrating a confluence wiki to a gollum wiki.
 
 Usage:
 
