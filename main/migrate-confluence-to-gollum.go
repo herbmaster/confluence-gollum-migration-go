@@ -8,9 +8,9 @@ import (
 	"regexp"
 	"bytes"
 	"os/exec"
-	"encoding/binary"
 	"io"
 	"strings"
+	"strconv"
 )
 
 func html2markdown(html []byte) (markdown []byte, err error) {
@@ -94,7 +94,7 @@ type ConfluencePage struct {
 	Id string
 	Title string
 	BodyId string
-	Version uint64
+	Version int
 	Attachments []Element
 }
 
@@ -106,7 +106,7 @@ type ConfluenceBodyContent struct {
 type ConfluenceAttachment struct {
 	Id string
 	Title string
-	Version uint64
+	Version int
 }
 
 type WikiPage struct {
@@ -189,10 +189,11 @@ func main() {
 		// Find all pages
 		if obj.Class == "Page" && obj.Package == "com.atlassian.confluence.pages" {
 			p := ConfluencePage{}
+			p.Version = 0
 			p.Id = obj.Id
 			for _, prop := range obj.Properties {
 				if prop.Name == "version" {
-					p.Version, _ = binary.Uvarint(prop.Value)
+					p.Version, _ = strconv.Atoi(string(prop.Value))
 				}
 				if prop.Name == "title"  {
 					p.Title = string(prop.Value)
@@ -234,7 +235,7 @@ func main() {
 					a.Title = string(prop.Value)
 				}
 				if prop.Name == "version" {
-					a.Version, _ = binary.Uvarint(prop.Value)
+					a.Version, _ = strconv.Atoi(string(prop.Value))
 				}
 			}
 			if previousA, ok := confluenceAttachments[obj.Id]; ok {
