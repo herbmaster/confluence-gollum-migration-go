@@ -279,7 +279,6 @@ func main() {
 					err = copyFileContents(attFile, outFile)
 					if err != nil {
 						fmt.Printf("%v\n", err)
-						return
 					}
 				}
 			}
