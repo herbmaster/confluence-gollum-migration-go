@@ -161,8 +161,8 @@ func slugify(str string) (result string) {
 }
 
 func main() {
-	outputDir := os.Args[2]
-	exportDir := os.Args[1]
+	outputDir := strings.TrimRight(os.Args[2], "/") + "/"
+	exportDir := strings.TrimRight(os.Args[1], "/") + "/"
 	entitiesFile, err := os.Open(exportDir + "entities.xml")
 	if err != nil {
 		fmt.Printf("error: %v", err)
