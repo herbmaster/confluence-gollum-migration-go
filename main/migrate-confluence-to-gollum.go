@@ -274,7 +274,7 @@ func main() {
 				if attachment.Title == string(match[1]) {
 					html = bytes.Replace(html, match[0], []byte(`<img src="` + w.Path + attachment.Title + `" alt="`+ attachment.Title +`">`), -1)
 					// Copy attachment file
-					attFile := exportDir + "attachments/" + page.Id + "/" + attachment.Id + "/" + string(attachment.Version)
+					attFile := exportDir + "attachments/" + page.Id + "/" + attachment.Id + "/" + strconv.Itoa(attachment.Version)
 					outFile := outputDir + w.Path + w.Filename + "/" + attachment.Title
 					err = copyFileContents(attFile, outFile)
 					if err != nil {
